@@ -23,7 +23,7 @@ Plug 'chrisbra/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
+Plug 'honza/vim-snippets'
 Plug 'airblade/vim-rooter'
 Plug 'junegunn/fzf', {'do': { -> fzf#install() } } " fuzzy search
 Plug 'junegunn/fzf.vim' 
@@ -35,7 +35,7 @@ Plug 'morhetz/gruvbox'
 
 call plug#end()
 
-let g:coc_global_extensions = ['coc-rust-analyzer', 'coc-pyright']
+let g:coc_global_extensions = ['coc-rust-analyzer', 'coc-pyright', 'coc-go']
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env', 'venv']
 
 set colorcolumn=78
