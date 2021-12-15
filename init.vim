@@ -23,7 +23,7 @@ Plug 'chrisbra/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'honza/vim-snippets'
+Plug 'honza/vim-snippets' " snippets
 Plug 'airblade/vim-rooter'
 Plug 'junegunn/fzf', {'do': { -> fzf#install() } } " fuzzy search
 Plug 'junegunn/fzf.vim' 
@@ -32,14 +32,14 @@ Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 " colorscheme
 Plug 'morhetz/gruvbox'
-
+Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 call plug#end()
-
-let g:coc_global_extensions = ['coc-rust-analyzer', 'coc-pyright', 'coc-go']
+" coc-pylsp
+let g:coc_global_extensions = ['coc-rust-analyzer', 'coc-go', 'coc-pyright']
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env', 'venv']
 
 set colorcolumn=78
-colorscheme gruvbox " set colorscheme
+colorscheme tokyonight " set colorscheme
 inoremap jk <esc>
 map <C-_> :Commentary<CR>
 
