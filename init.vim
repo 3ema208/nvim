@@ -12,8 +12,11 @@ set autoindent
 set fileformat=unix
 
 " filetype indent on      " load filetype-specific indent files
-
-let g:python3_host_prog = '/usr/bin/python3.10'
+if has('mac')
+    let g:python3_host_prog='/usr/bin/python3'
+elseif 
+    let g:python3_host_prog = '/usr/bin/python3.10'
+endif
 
 call plug#begin('~/.vim/plugged')
 Plug 'mxw/vim-jsx'
