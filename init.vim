@@ -11,9 +11,9 @@ set expandtab
 set autoindent
 set fileformat=unix
 
-filetype indent on      " load filetype-specific indent files
+" filetype indent on      " load filetype-specific indent files
 
-let g:python3_host_prog = '/usr/bin/python3'
+let g:python3_host_prog = '/usr/bin/python3.10'
 
 call plug#begin('~/.vim/plugged')
 Plug 'mxw/vim-jsx'
@@ -47,6 +47,7 @@ let g:coc_global_extensions = [
             \'coc-rust-analyzer', 
             \'coc-go', 
             \'coc-pyright', 
+            \'coc-snippets',
             \'coc-rls', 
             \'coc-tsserver', 
             \'coc-eslint', 
@@ -70,10 +71,10 @@ map gp :bp<cr>
 nnoremap <leader>n :NERDTreeFocus<CR>
 nnoremap <C-t> :NERDTree<CR>
 nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
+" nnoremap <C-f> :NERDTreeFind<CR>
 " fuzzy search by files
-noremap <C-S> :Files<CR>
-noremap <C-f> :Rg<CR>
+" noremap <C-S> :Files<CR>
+noremap <C-S> :Rg<CR>
 
 noremap <C-Left> :tabn<CR>
 noremap <C-Right> :tabp<CR>
