@@ -23,7 +23,7 @@ au BufEnter *.py :vmap ^_ :s/^/#/ <Enter> :nohlsearch <Enter>
 
 " filetype indent on      " load filetype-specific indent files
 if has('mac')
-    let g:python3_host_prog = '/usr/bin/python3.10'
+    let g:python3_host_prog = '/usr/local/opt/python@3.10/bin/python3.10'
 else 
     let g:python3_host_prog='/usr/bin/python3'
 endif
@@ -41,7 +41,7 @@ Plug 'vim-airline/vim-airline' " bottom line
 Plug 'jiangmiao/auto-pairs'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Plug 'honza/vim-snippets' " snippets
+Plug 'honza/vim-snippets' " snippets
 
 Plug 'junegunn/fzf', {'do': { -> fzf#install() } } " fuzzy search
 Plug 'junegunn/fzf.vim' 
@@ -59,7 +59,6 @@ let g:coc_global_extensions = [
             \'coc-rust-analyzer', 
             \'coc-go', 
             \'coc-pyright', 
-            \'coc-snippets',
             \'coc-rls', 
             \'coc-tsserver', 
             \'coc-eslint', 
