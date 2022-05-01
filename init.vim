@@ -14,9 +14,11 @@ set wrap
 set colorcolumn=78
 set foldmethod=manual
 
+let mapleader=" "
+
 autocmd FileType html setlocal ts=2 sts=2 sw=2
 autocmd FileType ruby setlocal ts=2 sts=2 sw=2
-autocmd FileType javascript setlocal ts=4 sts=4 sw=4
+autocmd FileType javascript setlocal ts=2 sts=2 sw=2
 
 au BufEnter *.js :vmap ^_ :s/^/\/\// <Enter> :nohlsearch <Enter>
 au BufEnter *.py :vmap ^_ :s/^/#/ <Enter> :nohlsearch <Enter>
@@ -42,10 +44,11 @@ Plug 'jiangmiao/auto-pairs'
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'honza/vim-snippets' " snippets
-
 Plug 'junegunn/fzf', {'do': { -> fzf#install() } } " fuzzy search
 Plug 'junegunn/fzf.vim' 
-
+" lsp
+" Plug 'neovim/nvim-lspconfig'
+" Plug 'williamboman/nvim-lsp-installer'
 " git
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
@@ -58,7 +61,6 @@ call plug#end()
 let g:coc_global_extensions = [
             \'coc-rust-analyzer', 
             \'coc-go', 
-            \'coc-pyright', 
             \'coc-rls', 
             \'coc-tsserver', 
             \'coc-eslint', 
@@ -66,6 +68,7 @@ let g:coc_global_extensions = [
             \'coc-prettier', 
             \'coc-css', 
             \'coc-emmet']
+" \'coc-pyright',
 
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env', 'venv']
 
@@ -79,25 +82,26 @@ map gp :bp<cr>
 
 " All extensions COC lts
 " noremap <C-P> :NERDTreeFocus<Cr>
-nnoremap <leader>n :NERDTreeFocus<CR>
-nnoremap <C-t> :NERDTree<CR>
-nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <leader>f :NERDTreeFocus<CR>
+nnoremap <Space>r :NERDTree<CR>
+nnoremap <Space>e :NERDTreeToggle<cr>
 " nnoremap <C-f> :NERDTreeFind<CR>
 
 " Search
 " noremap <C-S> :Files<CR>
-noremap <C-S> :Ag<CR>
+noremap <leader>fw :Rg<CR>
+noremap <leader>ww :Files<CR>
 
 " Tabs
-noremap <C-Left> :tabn<CR>
-noremap <C-Right> :tabp<CR>
+noremap <Space><Left> :tabn<CR>
+noremap <Space><Right> :tabp<CR>
 
 command! -nargs=0 Format :call CocActionAsync('format')
 " map write 
-noremap <Space>w :w<CR>
+noremap <Space>w :w<CR> 
 noremap <Space>W :wq<CR>
 " GoTo code navigation.
-noremap <C-l>:Format<CR>
+noremap <leader>l :Format<CR>
 " GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -115,4 +119,3 @@ vnoremap <S-up> dkPV`]
 
 " Git 
 nnoremap Gt :GitBlameToggle<CR>
-
