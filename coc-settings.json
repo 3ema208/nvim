@@ -1,23 +1,62 @@
 {
-  "languageserver": {
-    "golang": {
-      "command": "gopls",
-      "rootPatterns": ["go.mod", ".vim/", ".git/", ".hg/"],
-      "filetypes": ["go"],
-      "initializationOptions": {
-        "usePlaceholders": true
-      }
-    },
-    "elmLS": {
-      "command": "elm-language-server",
-      "filetypes": ["elm"],
-      "rootPatterns": ["elm.json"],
-      "initializationOptions": {
-        "elmPath": "elm", // optional
-        "elmFormatPath": "elm-format", // optional
-        "elmTestPath": "elm-test", // optional
-        "elmAnalyseTrigger": "change" // optional
-      }
+    "tsserver.enable": true,
+    "languageserver": {
+        "golang": {
+            "command": "gopls",
+            "rootPatterns": [
+                "go.mod",
+                ".vim/",
+                ".git/",
+                ".hg/"
+            ],
+            "filetypes": [
+                "go"
+            ],
+            "initializationOptions": {
+                "usePlaceholders": true
+            }
+        },
+        "tailwind-lsp": {
+            "command": "tailwindcss-language-server",
+            "args": [
+                "--stdio"
+            ],
+            "filetypes": [
+                "javascript",
+                "javascriptreact",
+                "typescript",
+                "typescriptreact"
+            ],
+            "rootPatterns": [
+                "tailwind.config.js",
+                "tailwind.config.ts",
+                "postcss.config.js",
+                "postcss.config.ts",
+                "package.json",
+                "node_modules",
+                ".git"
+            ],
+            "settings": {
+                "tailwindCSS": {
+                    "validate": true,
+                    "lint": {
+                        "cssConflict": "warning",
+                        "invalidApply": "error",
+                        "invalidScreen": "error",
+                        "invalidVariant": "error",
+                        "invalidConfigPath": "error",
+                        "invalidTailwindDirective": "error",
+                        "recommendedVariantOrder": "warning"
+                    },
+                    "classAttributes": [
+                        "class",
+                        "className",
+                        "classList",
+                        "ngClass"
+                    ],
+                    "experimental": {}
+                }
+            }
+        }
     }
-  }
 }
