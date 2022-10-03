@@ -43,19 +43,35 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf', {'do': { -> fzf#install() } } " fuzzy search
 Plug 'junegunn/fzf.vim' 
 
+Plug 'kwsp/halcyon-neovim'
+" Rust
+Plug 'rust-lang/rust.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'dense-analysis/ale'
 " lsp
-Plug 'hrsh7th/nvim-compe'
-Plug 'neovim/nvim-lspconfig'
-Plug 'williamboman/nvim-lsp-installer'
+" Plug 'hrsh7th/nvim-compe'
+" Plug 'neovim/nvim-lspconfig'
+" Plug 'williamboman/nvim-lsp-installer'
 " git
 Plug 'airblade/vim-gitgutter'
 call plug#end()
+
+let g:rustfmt_autosave = 1
+let g:rustfmt_emit_files = 1
+let g:rustfmt_fail_silently = 0
+
+inoremap <expr> <CR> pumvisible() ? "\<C-Y>" : "\<CR>"
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 
 " coc-pylsp
 autocmd FileType python let b:coc_root_patterns = ['.git', '.env', 'venv']
 
 colorscheme tokyonight " set colorscheme
-inoremap jk <esc>
+" inoremap jk <esc>
 
 map <C-_> :Commentary<CR>
 " nvim buffers
@@ -63,16 +79,14 @@ map gn :bn<cr>
 map gp :bp<cr>
 
 " All extensions COC lts
+noremap <Space>ff :Format<CR>
 " noremap <C-P> :NERDTreeFocus<Cr>
 nnoremap <leader>f :NERDTreeFocus<CR>
 nnoremap <leader>r :NERDTree<CR>
 nnoremap <leader>e :NERDTreeToggle<cr>
-" nnoremap <C-f> :NERDTreeFind<CR>
 
 " Search
-" noremap <C-S> :Files<CR>
 noremap <leader>fw :Rg<CR>
-noremap <leader>ww :Files<CR>
 
 " Tabs
 noremap <Space><Left> :tabn<CR>
@@ -81,10 +95,8 @@ noremap <Space>j :tabn<CR>
 noremap <Space><Right> :tabp<CR>
 noremap <Space>k :tabp<CR>
 
-noremap <Space>ff :Format<CR>
 " map write 
 noremap <Space>ww :w<CR> 
-noremap <Space>W :wq<CR>
 noremap <leader>ss :vsplit<CR>
 noremap <leader>h :noh<CR>
 
@@ -100,107 +112,3 @@ inoremap jj <Esc>
 
 vnoremap <S-down> dpV`]
 vnoremap <S-up> dkPV`]
-
-" Git 
-nnoremap Gt :GitBlameToggle<CR>
-
-set completeopt=menuone,noselect
-let g:compe = {}
-let g:compe.enabled = v:true
-let g:compe.autocomplete = v:true
-let g:compe.debug = v:false
-let g:compe.min_length = 1
-let g:compe.preselect = 'enable'
-let g:compe.throttle_time = 80
-let g:compe.source_timeout = 200
-let g:compe.resolve_timeout = 800
-let g:compe.incomplete_delay = 400
-let g:compe.max_abbr_width = 100
-let g:compe.max_kind_width = 100
-let g:compe.max_menu_width = 100
-let g:compe.documentation = v:true
-
-let g:compe.source = {}
-let g:compe.source.path = v:true
-let g:compe.source.buffer = v:true
-let g:compe.source.calc = v:true
-let g:compe.source.nvim_lsp = v:true
-let g:compe.source.nvim_lua = v:true
-let g:compe.source.vsnip = v:true
-let g:compe.source.ultisnips = v:true
-let g:compe.source.luasnip = v:true
-let g:compe.source.emoji = v:true
-
-
-lua << EOF
-local nvim_lsp = require'lspconfig'
-
-local on_attach = function(client)
-    require'completion'.on_attach(client)
-end
-
--- Mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
-local opts = { noremap=true, silent=true }
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
-
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<space>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<space>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<space>f', vim.lsp.buf.formatting, bufopts)
-end
-
-local lsp_flags = {
-  -- This is the default in Nvim 0.7+
-  debounce_text_changes = 150,
-}
-require('lspconfig')['pyright'].setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-}
-require('lspconfig')['tsserver'].setup{
-    on_attach = on_attach,
-    flags = lsp_flags,
-}
-
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-capabilities.textDocument.completion.completionItem.resolveSupport = {
-  properties = {
-    'documentation',
-    'detail',
-    'additionalTextEdits',
-  }
-}
-
-require('lspconfig')['rust_analyzer'].setup{
-    capabilities = capabilities,
-    on_attach = on_attach,
-    flags = lsp_flags,
-    -- Server-specific settings...
-    settings = {
-      ["rust-analyzer"] = {}
-    }
-}
